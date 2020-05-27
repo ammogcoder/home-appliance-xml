@@ -27,8 +27,7 @@ public class HomeApplianceXML extends MainWindow {
 
 	public void initUI() {
 
-		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory
-				.create("xml/homeApplianceXML.xml");
+		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML.xml");
 		swap(xmlCont);
 
 		Button plus = (Button) xmlCont.getControlByID("@+id/plus");
