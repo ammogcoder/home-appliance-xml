@@ -8,16 +8,25 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<totalcross.activation_key>5443444B43554F0ADBF5E97E</totalcross.activation_key>
-		<totalcross.sdkPath>/Users/brunoamuniz/Downloads/totalcross_6.0.4_test/</totalcross.sdkPath>
+		<totalcross.sdkPath>/Users/brunoamuniz/Downloads/totalcross_develop/</totalcross.sdkPath>
 	</properties>
 	<dependencies>
+		
 		<dependency>
 			<groupId>com.totalcross</groupId>
 			<artifactId>totalcross-sdk</artifactId>
-			<version>6.0.3</version>
+			<version>6.0.4</version>
 			<systemPath>${totalcross.sdkPath}/dist/totalcross-sdk.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.totalcross.knowcode</groupId>
+			<artifactId>totalcross-knowcode</artifactId>
+			<version>0.0.1</version>
+			<systemPath>/Users/brunoamuniz/Dropbox/dev/git/KnowCodeXML/target/Knowcode.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.vafer</groupId>
 			<artifactId>jdeb</artifactId>
@@ -148,19 +157,10 @@
 				<configuration>
                     <name>HomeApplianceXML</name>
                     <platforms>
-                        <!-- <platform>-linux</platform> -->
                         <platform>-linux_arm</platform>
-                        <!-- <platform>-android</platform> -->
-                        <!-- <platform>-win32</platform> -->
-                    </platforms>
+					</platforms>
+					<totalcrossHome>${totalcross.sdkPath}</totalcrossHome>
                     <activationKey>${totalcross.activation_key}</activationKey>
-                    <!--
-                                        For version 4.4.2 and 5.1.4 or later, Apple certificates are no longer required.
-                    -->
-                    <!--
-                                        <certificates>${totalcross.applecertificate}</certificates>
-                    -->
-                    <totalcrossHome>${totalcross.sdkPath}</totalcrossHome>
                 </configuration>
 				<executions>
 					<execution>
