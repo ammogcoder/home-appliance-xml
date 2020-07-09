@@ -8,7 +8,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<totalcross.activation_key>5443444B43554F0ADBF5E97E</totalcross.activation_key>
-		<totalcross.sdkPath>/Users/brunoamuniz/Downloads/totalcross_develop/</totalcross.sdkPath>
+		<totalcross.sdkPath>/Users/brunomuniz/Downloads/totalcross_develop</totalcross.sdkPath>
 	</properties>
 	<dependencies>
 		
@@ -23,7 +23,7 @@
 			<groupId>com.totalcross.knowcode</groupId>
 			<artifactId>totalcross-knowcode</artifactId>
 			<version>0.0.1</version>
-			<systemPath>/Users/brunoamuniz/Dropbox/dev/git/KnowCodeXML/target/Knowcode.jar</systemPath>
+			<systemPath>/Users/brunomuniz/Dropbox/dev/git/KnowCodeXML/target/Knowcode.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
 		
