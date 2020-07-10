@@ -1,9 +1,8 @@
 
 package com.totalcross.knowcode;
 
-import com.totalcross.knowcode.parse.XmlContainerLayout;
 import com.totalcross.knowcode.parse.XmlContainerFactory;
-
+import com.totalcross.knowcode.parse.XmlContainerLayout;
 import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
@@ -12,10 +11,8 @@ import totalcross.ui.Button;
 import totalcross.ui.ImageControl;
 import totalcross.ui.Label;
 import totalcross.ui.MainWindow;
-import totalcross.ui.Toast;
 import totalcross.ui.event.ControlEvent;
 import totalcross.ui.event.PressListener;
-import totalcross.ui.event.UpdateListener;
 
 public class HomeApplianceXML extends MainWindow {
 
@@ -33,7 +30,7 @@ public class HomeApplianceXML extends MainWindow {
 
 	public void initUI() {
 
-		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML.xml");
+		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML2.xml");
 		swap(xmlCont);
 
 		Button plus = (Button) xmlCont.getControlByID("@+id/plus");
