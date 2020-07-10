@@ -156,7 +156,21 @@
       android:textStyle="bold"
       tools:layout_editor_absoluteX="473dp"
       tools:layout_editor_absoluteY="234dp" />
+  <Button
+          android:id="@+id/night"
+          android:layout_width="37dp"
+          android:layout_height="31dp"
+          android:background="@drawable/day_on"
+          tools:layout_editor_absoluteX="86dp"
+          tools:layout_editor_absoluteY="192dp"/>
 
+  <Button
+          android:id="@+id/day"
+          android:layout_width="37dp"
+          android:layout_height="31dp"
+          android:background="@drawable/nigth_off"
+          tools:layout_editor_absoluteX="134dp"
+          tools:layout_editor_absoluteY="192dp"/>
   <TextView
       android:id="@+id/textView3"
       android:layout_width="99dp"
@@ -166,6 +180,6 @@
       android:textSize="12dp"
       android:text="Climate"
       android:gravity="center"
-      app:layout_constraintStart_toStartOf="@+id/textView5"
-      app:layout_constraintTop_toBottomOf="@+id/textView5" />
+      app:layout_constraintStart_toStartOf="@+id/insideTempLabel"
+      app:layout_constraintTop_toBottomOf="@+id/insideTempLabel" />
 </androidx.constraintlayout.widget.ConstraintLayout>
