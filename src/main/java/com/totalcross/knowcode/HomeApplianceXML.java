@@ -19,7 +19,7 @@ public class HomeApplianceXML extends MainWindow {
 	private ImageControl cloudImage;
 
 	public HomeApplianceXML() {
-		setUIStyle(Settings.MATERIAL_UI);
+		setUIStyle(Settings.FLAT_UI);
 	}
 
 	static {
