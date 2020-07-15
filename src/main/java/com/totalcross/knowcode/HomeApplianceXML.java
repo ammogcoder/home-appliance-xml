@@ -3,6 +3,7 @@ package com.totalcross.knowcode;
 
 import com.totalcross.knowcode.parse.XmlContainerFactory;
 import com.totalcross.knowcode.parse.XmlContainerLayout;
+
 import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
@@ -27,6 +28,8 @@ public class HomeApplianceXML extends MainWindow {
 		Settings.appVersion = "1.0.0";
 		Settings.iosCFBundleIdentifier = "com.totalcross.easytiful";
 	}
+
+	boolean isDay = true;
 
 	public void initUI() {
 
@@ -103,6 +106,46 @@ public class HomeApplianceXML extends MainWindow {
 			}
 		});
 
+
+		ImageControl backgroundDay = (ImageControl) xmlCont.getControlByID("@+id/imageView1");
+		ImageControl backgroundNight = (ImageControl) xmlCont.getControlByID("@+id/imageView");
+
+		Button day = (Button) xmlCont.getControlByID("@+id/night");
+		day.addPressListener(new PressListener(){
+
+			@Override
+			public void controlPressed(ControlEvent e) {
+				if (isDay) {
+					return;
+				}
+				toggleImage(backgroundDay, backgroundNight);
+				isDay = !isDay;
+			}
+			
+		});
+
+		Button night = (Button) xmlCont.getControlByID("@+id/day");
+		night.addPressListener(new PressListener(){
+
+			@Override
+			public void controlPressed(ControlEvent e) {
+				if (!isDay) {
+					return;
+				}
+				toggleImage(backgroundNight, backgroundDay);
+				isDay = !isDay;
+			}
+			
+		});
+	}
+
+	private void toggleImage(ImageControl day, ImageControl night) {
+		for (int i = 0 ; i < 255 ; i+=25) {
+			day.getImage().alphaMask = Math.min(i, 255);
+			night.getImage().alphaMask = Math.max(0, 255 - i);
+			day.repaintNow();
+			night.repaintNow();
+		}
 	}
 
 	boolean cloudAnimation = false;
