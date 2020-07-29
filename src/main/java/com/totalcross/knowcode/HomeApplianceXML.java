@@ -4,6 +4,7 @@ package com.totalcross.knowcode;
 import com.totalcross.knowcode.parse.XmlContainerFactory;
 import com.totalcross.knowcode.parse.XmlContainerLayout;
 
+import totalcross.io.IOException;
 import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
@@ -14,13 +15,15 @@ import totalcross.ui.Label;
 import totalcross.ui.MainWindow;
 import totalcross.ui.event.ControlEvent;
 import totalcross.ui.event.PressListener;
+import totalcross.ui.image.Image;
+import totalcross.ui.image.ImageException;
 
 public class HomeApplianceXML extends MainWindow {
 
 	private ImageControl cloudImage;
 
 	public HomeApplianceXML() {
-		setUIStyle(Settings.FLAT_UI);
+		setUIStyle(Settings.MATERIAL_UI);
 	}
 
 	static {
@@ -33,7 +36,7 @@ public class HomeApplianceXML extends MainWindow {
 
 	public void initUI() {
 
-		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML2.xml");
+		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML.xml");
 		swap(xmlCont);
 
 		Button plus = (Button) xmlCont.getControlByID("@+id/plus");
@@ -109,7 +112,7 @@ public class HomeApplianceXML extends MainWindow {
 
 		ImageControl backgroundDay = (ImageControl) xmlCont.getControlByID("@+id/imageView1");
 		ImageControl backgroundNight = (ImageControl) xmlCont.getControlByID("@+id/imageView");
-
+		Button night = (Button) xmlCont.getControlByID("@+id/day");
 		Button day = (Button) xmlCont.getControlByID("@+id/night");
 		day.addPressListener(new PressListener(){
 
@@ -118,19 +121,35 @@ public class HomeApplianceXML extends MainWindow {
 				if (isDay) {
 					return;
 				}
+				try {
+					day.setImage(new Image("drawable/day_on.png").getHwScaledInstance(day.getWidth(), day.getHeight()));
+					night.setImage(new Image("drawable/nigth_off.png").getHwScaledInstance(day.getWidth(), day.getHeight()));
+				} catch (ImageException ex) {
+					ex.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 				toggleImage(backgroundDay, backgroundNight);
 				isDay = !isDay;
 			}
 			
 		});
 
-		Button night = (Button) xmlCont.getControlByID("@+id/day");
+
 		night.addPressListener(new PressListener(){
 
 			@Override
 			public void controlPressed(ControlEvent e) {
 				if (!isDay) {
 					return;
+				}
+				try {
+					day.setImage(new Image("drawable/day_off.png").getHwScaledInstance(day.getWidth(), day.getHeight()));
+					night.setImage(new Image("drawable/nigth_on.png").getHwScaledInstance(day.getWidth(), day.getHeight()));
+				} catch (ImageException ex) {
+					ex.printStackTrace();
+				} catch (IOException ex) {
+					ex.printStackTrace();
 				}
 				toggleImage(backgroundNight, backgroundDay);
 				isDay = !isDay;
