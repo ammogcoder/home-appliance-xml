@@ -47,7 +47,7 @@ public class HomeApplianceXML extends MainWindow {
 	Button nightButton, dayButton;
 
 	// Firebase Secret
-	private static final String AUTH_KEY = "9xev12w1d3uGdsBiVjwXQkUov3WfJh7lojO96MB0";
+	private static final String AUTH_KEY = "firebase";
 
 	final String FIREBASE_URL = "https://webinarhomeappliance.firebaseio.com/databases/(default)/documents/commands.json?auth="
 			+ AUTH_KEY;
