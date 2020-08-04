@@ -2,11 +2,17 @@ package com.totalcross.knowcode;
 
 import totalcross.io.LineReader;
 import totalcross.io.Stream;
+import totalcross.sys.Convert;
+import totalcross.sys.InvalidNumberException;
+import totalcross.sys.Settings;
 import totalcross.sys.Vm;
 
 public class ReadSensors {
 
     public String readTemp() {
+
+        if (!Settings.platform.equalsIgnoreCase("linux_arm"))
+            return "18";
 
         // Process initialization
         Process process = null;
@@ -38,7 +44,18 @@ public class ReadSensors {
             e.printStackTrace();
         }
 
-        return input;
+        return validaTemp(input);
+    }
+
+    private String validaTemp(String temp) {
+        try {
+            if (temp == null || temp.equalsIgnoreCase("error") || temp.trim().equals("") || Convert.toInt(temp) < 20)
+                return null;
+        } catch (InvalidNumberException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return temp;
     }
 
 }

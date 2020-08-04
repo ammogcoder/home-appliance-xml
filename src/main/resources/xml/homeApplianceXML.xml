@@ -76,7 +76,7 @@
             app:layout_constraintStart_toStartOf="@+id/textView1"
             app:layout_constraintTop_toBottomOf="@+id/textView1"  />
     <ImageView
-            android:id="@+id/nuvem"
+            android:id="@+id/tempIcon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/nuvem"
