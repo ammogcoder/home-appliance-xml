@@ -6,8 +6,11 @@ import totalcross.TotalCrossApplication;
 public class HomeApplianceXMLApplication {
 
     public static void main(String[] args) {
-        // TotalCrossApplication.run(Knowcode.class);
-
-        TotalCrossApplication.run(HomeApplianceXML.class, "/r", "5443444B43554F0ADBF5E97E", "/scr", "848x480");
+        /*
+         * Runs the application in simulator with /scr specified resolution, it's
+         * possible to specify /density too.
+         */
+        TotalCrossApplication.run(HomeApplianceXML.class, "/scr", "848x480", "/density", "1", "/r",
+                "5443444B5AAEEB90306B00E4");
     }
 }

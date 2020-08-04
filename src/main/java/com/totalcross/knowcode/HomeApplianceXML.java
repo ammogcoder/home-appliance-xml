@@ -1,8 +1,8 @@
 
 package com.totalcross.knowcode;
 
-import com.totalcross.knowcode.parse.XmlContainerLayout;
 import com.totalcross.knowcode.parse.XmlContainerFactory;
+import com.totalcross.knowcode.parse.XmlContainerLayout;
 
 import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
@@ -27,49 +27,58 @@ public class HomeApplianceXML extends MainWindow {
 
 	public void initUI() {
 
-		XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML.xml");
+		/*
+		 * Creating the XmlContainerLayout based in the xml created in AndroidStudio.
+		 * Note that images specified in android:background tag are placed in
+		 * src/main/java/resources/drawable
+		 */
+		final XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML.xml");
+
+		// Swapping from MainWindow to XmlContainerLayout.
 		swap(xmlCont);
 
-		Button plus = (Button) xmlCont.getControlByID("@+id/plus");
-		Label insideTempLabel = (Label) xmlCont.getControlByID("@+id/insideTempLabel");
+		// Getting Label instance that matches with "android:id" tag in xml.
+		final Label insideTempLabel = (Label) xmlCont.getControlByID("@+id/insideTempLabel");
 
-		plus.addPressListener(new PressListener() {
+		// Getting Button instance that matches with "android:id" tag in xml.
+		final Button plusButton = (Button) xmlCont.getControlByID("@+id/plus");
+
+		// Handling events for gotten button
+		plusButton.addPressListener(new PressListener() {
 
 			@Override
 			public void controlPressed(ControlEvent e) {
-				// TODO
-
 				try {
+					final String tempString = insideTempLabel.getText();
 
-					String tempString = insideTempLabel.getText();
-					int temp;
-					temp = Convert.toInt(tempString);
+					int temp = Convert.toInt(tempString);
+
+					// Sets label text increasing temp
 					insideTempLabel.setText(Convert.toString(++temp));
-
-				} catch (InvalidNumberException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (InvalidNumberException exception) {
+					exception.printStackTrace();
 				}
 
 			}
 		});
 
-		Button minus = (Button) xmlCont.getControlByID("@+id/minus");
-		minus.addPressListener(new PressListener() {
+		// Getting Button instance that matches with "android:id" tag in xml.
+		final Button minusButton = (Button) xmlCont.getControlByID("@+id/minus");
+
+		// Handling events for gotten button
+		minusButton.addPressListener(new PressListener() {
 
 			@Override
 			public void controlPressed(ControlEvent e) {
-				// TODO
-
 				try {
-					String tempString = insideTempLabel.getText();
-					int temp;
-					temp = Convert.toInt(tempString);
-					insideTempLabel.setText(Convert.toString(--temp));
+					final String tempString = insideTempLabel.getText();
 
-				} catch (InvalidNumberException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					int temp = Convert.toInt(tempString);
+
+					// Sets label text decreasing temp
+					insideTempLabel.setText(Convert.toString(--temp));
+				} catch (InvalidNumberException exception) {
+					exception.printStackTrace();
 				}
 
 			}
