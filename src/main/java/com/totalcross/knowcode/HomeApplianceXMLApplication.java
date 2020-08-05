@@ -6,6 +6,7 @@ import totalcross.TotalCrossApplication;
 public class HomeApplianceXMLApplication {
 
     public static void main(String[] args) {
+      
         /*
          * Runs the application in simulator with /scr specified resolution, it's
          * possible to specify /density too.

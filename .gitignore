@@ -29,6 +29,3 @@ hs_err_pid*
 .classpath
 .project
 /target/*
-
-# runtime generated files
-chime.mp3
