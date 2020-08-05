@@ -36,7 +36,7 @@
       tools:layout_editor_absoluteX="91dp"
       tools:layout_editor_absoluteY="241dp" />
   <ImageView
-      android:id="@+id/imageView7"
+      android:id="@+id/tempIcon"
       android:layout_width="18dp"
       android:layout_height="38dp"
       android:background="@drawable/thermo"
@@ -90,9 +90,9 @@
       android:textColor="#FFFFFF"
       android:textStyle="bold"
       android:textSize="25dp"
-      android:text="14°"
+      android:text="14"
       tools:layout_editor_absoluteX="125dp"
-      app:layout_constraintBottom_toBottomOf="@+id/imageView7" />
+      app:layout_constraintBottom_toBottomOf="@+id/tempIcon" />
 
   <Button
       android:id="@+id/poweroff"

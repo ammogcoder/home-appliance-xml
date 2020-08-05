@@ -1,10 +1,8 @@
 # Programa : Sensor de temperatura DHT11 com Raspberry Pi
-# Autor : FILIPEFLOP
- 
+
 # Carrega as bibliotecas
 import Adafruit_DHT
 import RPi.GPIO as GPIO
-import time
  
 # Define o tipo de sensor
 sensor = Adafruit_DHT.DHT11
