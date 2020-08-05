@@ -17,30 +17,28 @@
 			<artifactId>totalcross-sdk</artifactId>
 			<version>6.1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.totalcross.knowcode</groupId>
-			<artifactId>KnowcodeLib</artifactId>
-			<version>0.0.1</version>
-			<systemPath>/Users/brunomuniz/Dropbox/dev/git/KnowCodeXML/target/KnowcodeLib.jar</systemPath>
-			<scope>system</scope>
-		</dependency>
+        <dependency>
+            <groupId>com.totalcross.knowcode</groupId>
+            <artifactId>KnowCodeXML</artifactId>
+            <version>1.11</version>
+        </dependency>
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>totalcross-repo</id>
-			<name>ip-172-31-40-140-releases</name>
-			<url>http://maven.totalcross.com/artifactory/repo1</url>
-		</repository>
-	</repositories>
-
 	<pluginRepositories>
-		<pluginRepository>
-			<id>totalcross-repo</id>
-			<name>ip-172-31-40-140-releases</name>
-			<url>http://maven.totalcross.com/artifactory/nightly</url>
-		</pluginRepository>
-	</pluginRepositories>
+        <pluginRepository>
+            <id>totalcross-repo</id>
+            <name>ip-172-31-40-140-releases</name>
+            <url>http://maven.totalcross.com/artifactory/repo1</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>totalcross-repo</id>
+            <name>ip-172-31-40-140-releases</name>
+            <url>http://maven.totalcross.com/artifactory/repo1</url>
+        </repository>
+    </repositories>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -57,8 +55,11 @@
 			<plugin>
 				<groupId>com.totalcross</groupId>
 				<artifactId>totalcross-maven-plugin</artifactId>
-				<version>1.1.7-20200803.213852-3</version>
-				<configuration>
+				<version>1.2.0</version>
+                <configuration>
+                    <externalResources>
+                        <externalResource>dht.py</externalResource>
+                    </externalResources>
 					<name>${project.name}</name>
 					<platforms>
 						<platform>-linux_arm</platform>
