@@ -19,6 +19,7 @@ import totalcross.json.JSONObject;
 import totalcross.net.HttpStream;
 import totalcross.net.URI;
 import totalcross.net.ssl.SSLSocketFactory;
+
 import totalcross.sys.Convert;
 import totalcross.sys.InvalidNumberException;
 import totalcross.sys.Settings;
@@ -29,6 +30,7 @@ import totalcross.ui.Label;
 import totalcross.ui.MainWindow;
 import totalcross.ui.event.ControlEvent;
 import totalcross.ui.event.PressListener;
+
 import totalcross.ui.event.UpdateListener;
 import totalcross.ui.image.Image;
 import totalcross.ui.image.ImageException;
@@ -54,7 +56,7 @@ public class HomeApplianceXML extends MainWindow {
 			+ AUTH_KEY;
 
 	public HomeApplianceXML() {
-		setUIStyle(Settings.FLAT_UI);
+		setUIStyle(Settings.MATERIAL_UI);
 	}
 
 	static {
@@ -73,6 +75,7 @@ public class HomeApplianceXML extends MainWindow {
 	};
 
 	public void initUI() {
+
 
 /*
  * Creating the XmlContainerLayout based in the xml created in AndroidStudio.
@@ -173,6 +176,7 @@ public class HomeApplianceXML extends MainWindow {
 		backgroundDay = (ImageControl) xmlCont.getControlByID("@+id/imageView1");
 		backgroundNight = (ImageControl) xmlCont.getControlByID("@+id/imageView");
 
+
 		nightButton = (Button) xmlCont.getControlByID("@+id/day");
 		dayButton = (Button) xmlCont.getControlByID("@+id/night");
 		if (dayButton != null) {
@@ -195,8 +199,8 @@ public class HomeApplianceXML extends MainWindow {
 				public void controlPressed(ControlEvent e) {
 					changeDay = false;
 
-				}
 
+				}
 			});
 		}
 
