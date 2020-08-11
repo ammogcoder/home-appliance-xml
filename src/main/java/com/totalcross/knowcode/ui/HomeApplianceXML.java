@@ -1,22 +1,22 @@
-
-package com.totalcross.knowcode;
+package com.totalcross.knowcode.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.totalcross.knowcode.communication.HTTPConnection;
+import com.totalcross.knowcode.config.FirebaseConfig;
+import com.totalcross.knowcode.config.UIConfig;
+import com.totalcross.knowcode.io.temperature.DHTSensorReader;
 import com.totalcross.knowcode.parse.XmlContainerFactory;
 import com.totalcross.knowcode.parse.XmlContainerLayout;
 
-import totalcross.io.ByteArrayStream;
 import totalcross.io.device.gpiod.GpiodChip;
 import totalcross.io.device.gpiod.GpiodLine;
 import totalcross.json.JSONArray;
 import totalcross.json.JSONObject;
-import totalcross.net.HttpStream;
 import totalcross.net.URI;
-import totalcross.net.ssl.SSLSocketFactory;
 import totalcross.sys.Convert;
 import totalcross.sys.Settings;
 import totalcross.sys.Vm;
@@ -29,14 +29,10 @@ import totalcross.ui.event.PressListener;
 import totalcross.ui.event.UpdateListener;
 import totalcross.ui.image.ImageException;
 
+/**
+ * Application MainWindow
+ */
 public class HomeApplianceXML extends MainWindow {
-
-	// Firebase Realtime Database Secret Key
-	private static final String AUTH_KEY = "9xev12w1d3uGdsBiVjwXQkUov3WfJh7lojO96MB0";
-
-	// Firebase Realtime Database document URL
-	private static final String FIREBASE_URL = "https://webinarhomeappliance.firebaseio.com/databases/(default)/documents/commands.json?auth="
-			+ AUTH_KEY;
 
 	/** Instance of GpiodChip, uset to initialize #pin for embedded devices */
 	private GpiodChip gpioChip;
@@ -47,14 +43,36 @@ public class HomeApplianceXML extends MainWindow {
 	 */
 	private GpiodLine pin;
 
-	/* Controls obtained by KnowCodeXML */
+	/*
+	 * Controls obtained by KnowCodeXML
+	 */
+
+	/**
+	 * App ackground when on
+	 */
 	private ImageControl backgroundDay;
+
+	/**
+	 * App background when off
+	 */
 	private ImageControl backgroundNight;
+
+	/**
+	 * Icon that blinks when reading temp from DHT
+	 */
 	private ImageControl externalTempIcon;
 
+	/** Label that shows inside temp */
 	private Label insideTempLabel;
 
+	/**
+	 * Button to turn off
+	 */
 	private Button nightButton;
+
+	/**
+	 * Button to turn on
+	 */
 	private Button dayButton;
 	/**/
 
@@ -117,6 +135,9 @@ public class HomeApplianceXML extends MainWindow {
 		Settings.iosCFBundleIdentifier = "com.totalcross.easytiful";
 	}
 
+	/**
+	 * MainWindow Constructor, used to set UI Style
+	 */
 	public HomeApplianceXML() {
 		// UI Style can be set just here, in MainWindow constructor
 		setUIStyle(Settings.MATERIAL_UI);
@@ -129,7 +150,9 @@ public class HomeApplianceXML extends MainWindow {
 		 * Note that images specified in android:background tag are placed in
 		 * src/main/java/resources/drawable
 		 */
-		final XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory.create("xml/homeApplianceXML2.xml");
+		final XmlContainerLayout xmlCont = (XmlContainerLayout) XmlContainerFactory
+				.create(UIConfig.LAYOUT_TO_INITIALIZE);
+
 		// Swapping from MainWindow to XmlContainerLayout.
 		swap(xmlCont);
 
@@ -178,7 +201,7 @@ public class HomeApplianceXML extends MainWindow {
 					blinkCloud();
 
 					// Reading temp from sensor
-					final ReadSensors readSensors = new ReadSensors();
+					final DHTSensorReader readSensors = new DHTSensorReader();
 					final String externalTemp = readSensors.readTemp();
 
 					// Its a very newbie comment, but note that before doing anything with string
@@ -382,43 +405,25 @@ public class HomeApplianceXML extends MainWindow {
 	 */
 	private void listen() {
 		try {
-			/*
-			 * Setting http options
-			 */
-			final HttpStream.Options options = new HttpStream.Options();
-			options.readTimeOut = 15000;
-			options.socketFactory = new SSLSocketFactory(); // This is very important because Firebase uses HTTPS
-			options.writeTimeOut = 15000;
-			options.openTimeOut = 5000;
-			options.httpType = HttpStream.GET;
-			options.writeBytesSize = 4096;
-			options.setContentType("application/json; charset=UTF-8");
-			options.setCharsetEncoding("UTF-8");
-			/**/
+			// Building URI
+			URI uri = new URI(FirebaseConfig.COMMANDS_FIREBASE_URL.concat("&orderBy=\"timestamp\""));
 
-			/*
-			 * Performing query
-			 */
-			HttpStream hs = new HttpStream(new URI(FIREBASE_URL.concat("&orderBy=\"timestamp\"")), options);
-			ByteArrayStream bas = new ByteArrayStream(4096);
-			bas.readFully(hs, 10, 4096);
-			hs.close();
-			String result = new String(bas.getBuffer(), 0, bas.available());
-			bas.close();
-			/**/
+			// Performing query
+			String response = HTTPConnection.doGet(uri);
 
-			if (result == null || result.equalsIgnoreCase("null"))
+			if (response == null || response.equalsIgnoreCase("null"))
 				return; // returning to prevent NullPointerException
 
 			/*
-			 * Parsing response in JSon Object
+			 * Parsing response in JSON Objects to get commands from remote.
 			 */
-			JSONObject data = new JSONObject(result);
+			JSONObject data = new JSONObject(response);
 
 			List<JSONObject> listCommands = new ArrayList<JSONObject>();
 
 			JSONArray ids = data.names();
 			JSONArray array = data.toJSONArray(ids);
+
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject command = array.getJSONObject(i);
 				String id = ids.getString(i);
@@ -457,8 +462,10 @@ public class HomeApplianceXML extends MainWindow {
 			// will be handled by updateListener
 			for (JSONObject command : listCommands) {
 
+				// Gets power state from remote.
 				day = command.getBoolean("power");
 
+				// Gets temp state from remote.
 				insideTemp = command.getInt("temp");
 
 				// Delete actual command in Firebase, to prevent re-execution of it
@@ -482,30 +489,11 @@ public class HomeApplianceXML extends MainWindow {
 	 * @throws Exception
 	 */
 	public void delete(String id) throws Exception {
-		/*
-		 * Setting http options
-		 */
-		final HttpStream.Options options = new HttpStream.Options();
-		options.readTimeOut = 15000;
-		options.socketFactory = new SSLSocketFactory(); // This is very important because Firebase uses HTTPS
-		options.writeTimeOut = 15000;
-		options.openTimeOut = 5000;
-		options.httpType = HttpStream.DELETE;
-		options.writeBytesSize = 4096;
-		options.setContentType("application/json; charset=UTF-8");
-		options.setCharsetEncoding("UTF-8");
+		// Building URI
+		URI uri = new URI(FirebaseConfig.COMMANDS_FIREBASE_URL.replace(".json", "/".concat(id).concat(".json")));
 
-		// Building URL
-		URI uri = new URI(FIREBASE_URL.replace(".json", "/".concat(id).concat(".json")));
-
-		/*
-		 * Performing delete
-		 */
-		try (final HttpStream hs = new HttpStream(uri, options)) {
-			if (!hs.isOk()) {
-				throw new Exception("Connection Error!");
-			}
-		}
+		// Performing delete
+		HTTPConnection.doDelete(uri);
 	}
 
 	/**

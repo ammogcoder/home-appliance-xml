@@ -1,4 +1,4 @@
-package com.totalcross.knowcode;
+package com.totalcross.knowcode.io.temperature;
 
 import totalcross.io.LineReader;
 import totalcross.io.Stream;
@@ -11,7 +11,7 @@ import totalcross.sys.Vm;
  * This is a reader that catch response of dht.py.
  * 
  */
-public class ReadSensors {
+public class DHTSensorReader {
 
     /**
      * Runs dht.py and returns it response.
