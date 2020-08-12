@@ -47,7 +47,7 @@ public class HomeApplianceXML extends MainWindow {
 	Button nightButton, dayButton;
 
 	// Firebase Secret
-	private static final String AUTH_KEY = "firebase";
+	private static final String AUTH_KEY = "9xev12w1d3uGdsBiVjwXQkUov3WfJh7lojO96MB0";
 
 	final String FIREBASE_URL = "https://webinarhomeappliance.firebaseio.com/databases/(default)/documents/commands.json?auth="
 			+ AUTH_KEY;
@@ -125,6 +125,7 @@ public class HomeApplianceXML extends MainWindow {
 					int temp;
 					temp = Convert.toInt(tempString);
 					newTemp = ++temp;
+					insideTempLabel.setText(newTemp + "");
 
 				} catch (InvalidNumberException e1) {
 					e1.printStackTrace();
@@ -144,6 +145,7 @@ public class HomeApplianceXML extends MainWindow {
 					int temp;
 					temp = Convert.toInt(tempString);
 					newTemp = --temp;
+					insideTempLabel.setText(newTemp + "");
 
 				} catch (InvalidNumberException e1) {
 					e1.printStackTrace();
@@ -164,9 +166,8 @@ public class HomeApplianceXML extends MainWindow {
 				@Override
 				public void controlPressed(ControlEvent e) {
 					changeDay = true;
-
+					setDay(changeDay);
 				}
-
 			});
 		}
 
@@ -176,7 +177,7 @@ public class HomeApplianceXML extends MainWindow {
 				@Override
 				public void controlPressed(ControlEvent e) {
 					changeDay = false;
-
+					setDay(changeDay);
 				}
 
 			});
@@ -187,6 +188,7 @@ public class HomeApplianceXML extends MainWindow {
 			public void run() {
 				try {
 					while (true) {
+
 						listen();
 						Thread.sleep(2000);
 					}
@@ -196,7 +198,7 @@ public class HomeApplianceXML extends MainWindow {
 			}
 		}.start();
 
-		MainWindow.getMainWindow().addUpdateListener(updateListener);
+		// MainWindow.getMainWindow().addUpdateListener(updateListener);
 
 	}
 
@@ -282,6 +284,7 @@ public class HomeApplianceXML extends MainWindow {
 			if (listCommands != null && !listCommands.isEmpty() && Settings.platform.equalsIgnoreCase("linux_arm"))
 				pin.setValue(1);
 
+			MainWindow.getMainWindow().addUpdateListener(updateListener);
 			for (JSONObject command : listCommands) {
 
 				boolean power = command.getBoolean("power");
@@ -289,12 +292,13 @@ public class HomeApplianceXML extends MainWindow {
 
 				// setDay(power);
 				changeDay = power;
-
 				delete(command.getString("id"));
 			}
 
 			if (Settings.platform.equalsIgnoreCase("linux_arm"))
 				pin.setValue(0);
+
+			MainWindow.getMainWindow().removeUpdateListener(updateListener);
 
 		} catch (Exception e) {
 			e.printStackTrace();
